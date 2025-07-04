@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProductType;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -24,7 +27,22 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->label('Product Name')
+                    ->required(),
+                TextInput::make('price')
+                    ->label('Price')
+                    ->numeric()
+                    ->required()
+                    ->minValue(0),
+                Select::make('category')
+                    ->label('Category')
+                    ->options(ProductType::label())
+                    ->required()
+                    ->searchable(),
+                TextInput::make('vendor')
+                    ->label('Vendor')
+                    ->required(),
             ]);
     }
 
@@ -32,13 +50,29 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-
+                TextColumn::make('name')
+                    ->label('Product Name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('price')
+                    ->label('Price')
+                    ->money('USD')
+                    ->sortable(),
+                TextColumn::make('category')
+                    ->label('Category')
+                    ->formatStateUsing( fn ($state)=> ucfirst(str_replace('_', ' ', $state)))
+                    ->sortable(),
+                TextColumn::make('vendor')
+                    ->label('Vendor')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Edit')->button()->color('primary'),
+                Tables\Actions\DeleteAction::make()->label('Remove')->button()->color('danger'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -46,6 +80,9 @@ class ProductResource extends Resource
                 ]),
             ]);
     }
+
+
+    
 
     public static function getRelations(): array
     {
