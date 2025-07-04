@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostsResource\Pages;
 use App\Filament\Resources\PostsResource\RelationManagers;
+use App\Models\Post;
 use App\Models\Posts;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PostsResource extends Resource
 {
-    protected static ?string $model = Posts::class;
+    protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
