@@ -16,9 +16,12 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\BaseResource;
 
 class ProductResource extends Resource
 {
+    use BaseResource;
+
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -29,9 +32,11 @@ class ProductResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->label('Product Name')
+                    ->placeholder('Enter product name')
                     ->required(),
                 TextInput::make('price')
                     ->label('Price')
+                    ->placeholder('Enter product price')
                     ->numeric()
                     ->required()
                     ->minValue(0),
@@ -42,6 +47,7 @@ class ProductResource extends Resource
                     ->searchable(),
                 TextInput::make('vendor')
                     ->label('Vendor')
+                    ->placeholder('Enter vendor name')
                     ->required(),
             ]);
     }
