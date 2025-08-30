@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Filament\Resources\CompanyResource\RelationManagers;
+use App\Filament\Resources\InvoiceResource\Pages\CreateInvoice;
+use App\Filament\Resources\InvoiceResource\Pages\ListInvoices;
 use App\Models\Company;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -48,8 +50,7 @@ class CompanyResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Action::make('view')
                     ->label('View')
-                    ->url(fn($record) => route('invoices', $record))
-                    ->openUrlInNewTab(),
+                    ->url(fn($record) => url('admin/companies/' . $record->id . '/invoices'))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -71,7 +72,8 @@ class CompanyResource extends Resource
             'index' => Pages\ListCompanies::route('/'),
             'create' => Pages\CreateCompany::route('/create'),
             'edit' => Pages\EditCompany::route('/{record}/edit'),
-            // 'invoices' => InvoiceResource::route('/{record}/invoices'),
+            'invoices' => ListInvoices::route('/{record}/invoices'),
+            'invoices-create' => CreateInvoice::route('/{record}/invoices/create'),
         ];
     }
 }

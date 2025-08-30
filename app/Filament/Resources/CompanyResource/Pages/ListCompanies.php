@@ -4,6 +4,7 @@ namespace App\Filament\Resources\CompanyResource\Pages;
 
 use App\Filament\Resources\CompanyResource;
 use App\Filament\Resources\InvoiceResource;
+use App\Models\Company;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
@@ -11,6 +12,8 @@ use Filament\Resources\Pages\ListRecords;
 class ListCompanies extends ListRecords
 {
     protected static string $resource = CompanyResource::class;
+
+    // public Company $company;
 
     protected function getHeaderActions(): array
     {
@@ -22,8 +25,8 @@ class ListCompanies extends ListRecords
     protected function getTableActions(): array
     {
         return [
-            Action::make('invoices')
-                ->label('Invoices')
+            // Action::make('invoices')
+            //     ->label('Invoices')
             // ->url(fn($record) => InvoiceResource::getUrl('index', ['company_id' => $record->id])),
         ];
     }
